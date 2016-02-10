@@ -1,0 +1,35 @@
+<ion-view view-title="Météo">
+  <ion-content class="">
+    <div class="card">
+      <div class="item item-text-wrap">
+        <div class="row">
+          <div class="col main">{{current.JSONDataResult}}°</div>
+        </div>
+        <div class="row">
+          <div class="col"><i class="icon ion-ios-cloudy logo"></i></div>
+          <div class="col likeTemp">{{ressentie.JSONDataResult}}° ressentie</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="item item-text-wrap">
+        <div class="row">
+          <div class="col main">{{vent.JSONDataResult}}km/h</div>
+        </div>
+        <div class="row">
+          <div class="col windDirection"><i class="icon ion-navigate"></i>{{directionVentLettre.JSONDataResult}}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="item item-text-wrap">
+        <div class="row">
+          <div class="col main">{{precipitations.JSONDataResult}}mm d'eau</div>
+          <div class="col">{{pression.JSONDataResult}}</div>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
