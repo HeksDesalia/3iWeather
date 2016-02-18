@@ -1,35 +1,35 @@
 <ion-view view-title="Météo">
   <ion-content class="">
-    <div class="card">
-      <div class="item item-text-wrap">
-        <div class="row">
-          <div class="col main">{{current.JSONDataResult}}°</div>
-        </div>
-        <div class="row">
-          <div class="col"><i class="wi wi-sleet"></i></div>
-          <div class="col likeTemp">{{ressentie.JSONDataResult}}° ressentie</div>
-        </div>
+    <ion-refresher
+    pulling-text="Tirer pour rafraichir..."
+    on-refresh="doRefresh()">
+  </ion-refresher>
+    <div class="row">
+      <div class="padding col temp">
+        <p>
+          {{current}}°<br/>
+          {{ressentie}}° ressentie
+        </p>
+      </div>
+      <div class="padding col other">
+          <i class="weatherIcon icon ion-ios-{{weatherIcon}}"></i>
       </div>
     </div>
-
-    <div class="card">
-      <div class="item item-text-wrap">
-        <div class="row">
-          <div class="col main">{{vent.JSONDataResult}}km/h</div>
-        </div>
-        <div class="row">
-          <div class="col windDirection"><i class="icon ion-navigate"></i>{{directionVentLettre.JSONDataResult}}</div>
-        </div>
+    <div class="row">
+      <div class="padding col wind">
+        <p>
+          {{vent.JSONDataResult}}km/h
+        </p>
+        <p>
+          <i class="icon ion-navigate"></i>{{directionVentLettre.JSONDataResult}}
+        </p>
       </div>
-    </div>
 
-    <div class="card">
-      <div class="item item-text-wrap">
-        <div class="row">
-          <div class="col main">{{precipitations.JSONDataResult}}mm d'eau</div>
-          <div class="col">{{pression.JSONDataResult}}</div>
-        </div>
+      <div class="padding col water" on-tap="showAlert()">
+          <i class="waterIcon icon ion-waterdrop"></i><br>
+          {{precipitations.JSONDataResult}}mm d'eau
       </div>
+
     </div>
   </ion-content>
 </ion-view>

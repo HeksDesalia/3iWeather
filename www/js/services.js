@@ -4,9 +4,9 @@ var labWeather = ['$q', '$resource', '$http',
   function($q, $resource, $http) {
 
   return {
+
     getCurrentWeather: function() {
       var meteo = $http.get('http://meteorestsrvmobile.lab3il.fr/RestServiceMeteo.svc/json/1');
-      console.log(meteo);
       return meteo;
     },
     getCurrentPression: function(){
