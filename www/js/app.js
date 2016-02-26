@@ -39,12 +39,12 @@ $stateProvider
         }
       }
     })
-    .state('tab.settings', {
-      url: '/settings',
+    .state('tab.prev', {
+      url: '/prev',
       views: {
-        'tab-settings': {
-          templateUrl: 'templates/tab-settings.html',
-          controller: 'SettingsCtrl'
+        'tab-prev': {
+          templateUrl: 'templates/tab-prev.html',
+          controller: 'PrevCtrl'
         }
       }
     });

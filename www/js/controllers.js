@@ -7,152 +7,158 @@ angular.module('starter.controllers', [])
 
 
   Weather.getCurrentWeather().then(function(resp){
-
-    var temp = adaptTemp(resp.data.JSONDataResult);
-    $scope.current = temp;
+    console.log(resp.data.JSONDataTmpsResult);
+    $scope.currentWeather = resp.data.JSONDataTmpsResult;
   }, function(error){
     //alert('Impossible de récupérer....');
     console.error('error');
   });
-  Weather.getCurrentPression().then(function(resp){
 
-    $scope.pression = resp.data;
-    var press = resp.data.JSONDataResult;
-    if (parseInt(press) >= 1020){
-      $scope.weatherIcon = "sunny";
+
+  $scope.doRefresh = function() {
+    Weather.getCurrentWeather().then(function(resp){
+      console.log(resp.data.JSONDataTmpsResult);
+      $scope.currentWeather = resp.data.JSONDataTmpsResult;
+    }, function(error){
+      //alert('Impossible de récupérer....');
+      console.error('error');
+    });
+
+    $scope.$broadcast('scroll.refreshComplete');
+  };
+
+
+  $scope.showAlert = function() {
+   var alertPopup = $ionicPopup.alert({
+     title: 'Informations supplémentaires',
+     template: 'Humidité : '+$scope.currentWeather.Humidite+' % <br> '+
+               'Pression de l\'aire : '+$scope.currentWeather.Pression+' hPa'
+   });
+  };
+
+})
+
+.controller('PrevCtrl', function($scope, $state, $ionicPopup, Weather) {
+  Weather.getPrevWeather().then(function(resp){
+    console.log(resp.data);
+    $scope.prevWeather = resp.data.JSonDataPrevResult;
+    $scope.AMIcon = "ion-pizza";
+    $scope.PMIcon = "ion-pizza";
+    if (resp.data.JSonDataPrevResult != undefined){
+      switch(resp.data.JSonDataPrevResult.PrevisionAM) {
+      case "N":
+          $scope.AMIcon = "ion-ios-partlysunny";
+          break;
+      case "B":
+          $scope.AMIcon = "ion-ios-sunny";
+          break;
+      case "Pe":
+          $scope.AMIcon = "ion-ios-cloudy";
+          break;
+      case "Pl":
+          $scope.AMIcon = "ion-ios-rainy";
+          break;
+      case "Ne":
+          $scope.AMIcon = "ion-ios-snowy";
+          break;
+      case "O":
+          $scope.AMIcon = "ion-ios-thunderstorm";
+          break;
+      case "X":
+          $scope.AMIcon = "ion-pizza";
+          break;
+      }
+
+      switch($scope.prevWeather.PrevisionPM) {
+      case "N":
+          $scope.PMIcon = "ion-ios-partlysunny";
+          break;
+      case "B":
+          $scope.PMIcon = "ion-ios-sunny";
+          break;
+      case "Pe":
+          $scope.PMIcon = "ion-ios-cloudy";
+          break;
+      case "Pl":
+          $scope.PMIcon = "ion-ios-rainy";
+          break;
+      case "Ne":
+          $scope.PMIcon = "ion-ios-snowy";
+          break;
+      case "O":
+          $scope.PMIcon = "ion-ios-thunderstorm";
+          break;
+      case "X":
+          $scope.PMIcon = "ion-pizza";
+          break;
+      }
     }
-    else{
-      $scope.weatherIcon = "cloudy";
-    }
   }, function(error){
-    //alert('Impossible de récupérer....');
-    console.error('error');
-  });
-  Weather.getCurrentHumide().then(function(resp){
-
-    $scope.humide = resp.data;
-  }, function(error){
-    //alert('Impossible de récupérer....');
-    console.error('error');
-  });
-  Weather.getCurrentVent().then(function(resp){
-
-    $scope.vent = resp.data;
-  }, function(error){
-    //alert('Impossible de récupérer....');
-    console.error('error');
-  });
-  Weather.getCurrentDirectionVent().then(function(resp){
-
-    $scope.directionVent = resp.data;
-  }, function(error){
-    //alert('Impossible de récupérer....');
-    console.error('error');
-  });
-  Weather.getCurrentDirectionVentLettre().then(function(resp){
-
-    $scope.directionVentLettre = resp.data;
-  }, function(error){
-    //alert('Impossible de récupérer....');
-    console.error('error');
-  });
-  Weather.getCurrentPrecipitations().then(function(resp){
-
-    $scope.precipitations = resp.data;
-  }, function(error){
-    //alert('Impossible de récupérer....');
-    console.error('error');
-  });
-  Weather.getCurrentRessentie().then(function(resp){
-
-    var temp = adaptTemp(resp.data.JSONDataResult)
-    $scope.ressentie = temp;
-  }, function(error){
-    //alert('Impossible de récupérer....');
     console.error('error');
   });
 
   $scope.doRefresh = function() {
-    Weather.getCurrentWeather().then(function(resp){
+    Weather.getPrevWeather().then(function(resp){
+      console.log(resp.data);
+      $scope.prevWeather = resp.data.JSonDataPrevResult;
+      $scope.AMIcon = "ion-pizza";
+      $scope.PMIcon = "ion-pizza";
+      if (resp.data.JSonDataPrevResult != undefined){
+        switch(resp.data.JSonDataPrevResult.PrevisionAM) {
+        case "N":
+            $scope.AMIcon = "ion-ios-partlysunny";
+            break;
+        case "B":
+            $scope.AMIcon = "ion-ios-sunny";
+            break;
+        case "Pe":
+            $scope.AMIcon = "ion-ios-cloudy";
+            break;
+        case "Pl":
+            $scope.AMIcon = "ion-ios-rainy";
+            break;
+        case "Ne":
+            $scope.AMIcon = "ion-ios-snowy";
+            break;
+        case "O":
+            $scope.AMIcon = "ion-ios-thunderstorm";
+            break;
+        case "X":
+            $scope.AMIcon = "ion-pizza";
+            break;
+        }
 
-      var temp = adaptTemp(resp.data.JSONDataResult);
-      $scope.current = temp;
-    }, function(error){
-      //alert('Impossible de récupérer....');
-      console.error('error');
-    });
-    Weather.getCurrentPression().then(function(resp){
-
-      $scope.pression = resp.data;
-      var press = resp.data.JSONDataResult;
-      if (parseInt(press) >= 1020){
-        $scope.weatherIcon = "sunny";
+        switch($scope.prevWeather.PrevisionPM) {
+        case "N":
+            $scope.PMIcon = "ion-ios-partlysunny";
+            break;
+        case "B":
+            $scope.PMIcon = "ion-ios-sunny";
+            break;
+        case "Pe":
+            $scope.PMIcon = "ion-ios-cloudy";
+            break;
+        case "Pl":
+            $scope.PMIcon = "ion-ios-rainy";
+            break;
+        case "Ne":
+            $scope.PMIcon = "ion-ios-snowy";
+            break;
+        case "O":
+            $scope.PMIcon = "ion-ios-thunderstorm";
+            break;
+        case "X":
+            $scope.PMIcon = "ion-pizza";
+            break;
+        }
       }
-      else{
-        $scope.weatherIcon = "cloudy";
-      }
     }, function(error){
-      //alert('Impossible de récupérer....');
       console.error('error');
     });
-    Weather.getCurrentHumide().then(function(resp){
 
-      $scope.humide = resp.data;
-    }, function(error){
-      //alert('Impossible de récupérer....');
-      console.error('error');
-    });
-    Weather.getCurrentVent().then(function(resp){
 
-      $scope.vent = resp.data;
-    }, function(error){
-      //alert('Impossible de récupérer....');
-      console.error('error');
-    });
-    Weather.getCurrentDirectionVent().then(function(resp){
-
-      $scope.directionVent = resp.data;
-    }, function(error){
-      //alert('Impossible de récupérer....');
-      console.error('error');
-    });
-    Weather.getCurrentDirectionVentLettre().then(function(resp){
-
-      $scope.directionVentLettre = resp.data;
-    }, function(error){
-      //alert('Impossible de récupérer....');
-      console.error('error');
-    });
-    Weather.getCurrentPrecipitations().then(function(resp){
-
-      $scope.precipitations = resp.data;
-    }, function(error){
-      //alert('Impossible de récupérer....');
-      console.error('error');
-    });
-    Weather.getCurrentRessentie().then(function(resp){
-
-      var temp = adaptTemp(resp.data.JSONDataResult)
-      $scope.ressentie = temp;
-
-    }, function(error){
-      //alert('Impossible de récupérer....');
-      console.error('error');
-    });
     $scope.$broadcast('scroll.refreshComplete');
   };
-  $scope.showAlert = function() {
-   var alertPopup = $ionicPopup.alert({
-     title: 'Informations supplémentaires',
-     template: 'Humidité : '+$scope.humide.JSONDataResult+' % <br> '+
-               'Pression de l\'aire : '+$scope.pression.JSONDataResult+' hPa'
-   });
- };
-
-})
-
-.controller('SettingsCtrl', function($scope) {
-
 });
 
 function adaptTemp(temp){

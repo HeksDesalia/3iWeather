@@ -1,4 +1,4 @@
-<ion-view view-title="Météo">
+<ion-view view-title="Météo actuelle">
   <ion-content class="">
     <ion-refresher
     pulling-text="Tirer pour rafraichir..."
@@ -7,8 +7,8 @@
     <div class="row">
       <div class="padding col temp">
         <p>
-          {{current}}°<br/>
-          {{ressentie}}° ressentie
+          {{currentWeather.Temperature}}°<br/>
+          {{currentWeather.TemperatureRessentie}}° ressentie
         </p>
       </div>
       <div class="padding col other">
@@ -18,16 +18,16 @@
     <div class="row">
       <div class="padding col wind">
         <p>
-          {{vent.JSONDataResult}}km/h
+          {{currentWeather.VentVitesse}}km/h
         </p>
         <p>
-          <i class="icon ion-navigate"></i>{{directionVentLettre.JSONDataResult}}
+          <i class="icon ion-navigate"></i>{{currentWeather.VentDirection}}
         </p>
       </div>
 
       <div class="padding col water" on-tap="showAlert()">
           <i class="waterIcon icon ion-waterdrop"></i><br>
-          {{precipitations.JSONDataResult}}mm d'eau
+          {{currentWeather.PrecipitationJour}}mm d'eau
       </div>
 
     </div>

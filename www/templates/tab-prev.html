@@ -1,0 +1,26 @@
+<ion-view view-title="Prévisions du lendemain">
+  <ion-content class="padding">
+    <ion-refresher
+    pulling-text="Tirer pour rafraichir..."
+    on-refresh="doRefresh()">
+  </ion-refresher>
+    <div class="row">
+      <div class="col padding">
+        <h2>METEOOOOOOOOOOOOO de demain !</h2>
+        <p>
+          {{prevWeather.PrevTempsMin}}° --- {{prevWeather.PrevTempsMax}}°
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <h3>Prévision pour le matin</h3>
+        <i class="weatherIcon icon {{AMIcon}}"></i>
+      </div>
+      <div class="col">
+        <h3>Prévision pour l'après-midi</h3>
+        <i class="weatherIcon icon {{PMIcon}}"></i>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
