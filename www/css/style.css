@@ -1,11 +1,14 @@
 /* Empty. Add your own CSS if you like */
+.tabs-color-light{
+  background-color: #9DF9FF;
+}
 
 .weatherIcon{
-  font-size: 150px;
+  font-size: 25px;
 }
 
 .waterIcon{
-  font-size: 100px;
+  font-size: 25px;
 }
 
 .temp{

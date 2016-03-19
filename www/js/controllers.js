@@ -14,6 +14,21 @@ angular.module('starter.controllers', [])
     console.error('error');
   });
 
+  Weather.getPrevWeather().then(function(resp){
+    $scope.prevWeather = resp.data.JSONDataPrevResult;
+    console.log(resp.data.JSONDataPrevResult);
+    if (resp.data.JSONDataPrevResult != undefined){
+      $scope.AMIcon = setIconPrev($scope.prevWeather.PrevisionAM);
+      $scope.PMIcon = setIconPrev($scope.prevWeather.PrevisionPM);
+    }
+    else{
+      console.error('FAIIIIIL');
+    }
+  }, function(error){
+    console.error('error');
+  });
+
+
 
   $scope.doRefresh = function() {
     Weather.getCurrentWeather().then(function(resp){
@@ -21,6 +36,20 @@ angular.module('starter.controllers', [])
       $scope.currentWeather = resp.data.JSONDataTmpsResult;
     }, function(error){
       //alert('Impossible de récupérer....');
+      console.error('error');
+    });
+
+    Weather.getPrevWeather().then(function(resp){
+      $scope.prevWeather = resp.data.JSONDataPrevResult;
+      console.log(resp.data.JSONDataPrevResult);
+      if (resp.data.JSONDataPrevResult != undefined){
+        $scope.AMIcon = setIconPrev($scope.prevWeather.PrevisionAM);
+        $scope.PMIcon = setIconPrev($scope.prevWeather.PrevisionPM);
+      }
+      else{
+        console.error('FAIIIIIL');
+      }
+    }, function(error){
       console.error('error');
     });
 
@@ -40,58 +69,15 @@ angular.module('starter.controllers', [])
 
 .controller('PrevCtrl', function($scope, $state, $ionicPopup, Weather) {
   Weather.getPrevWeather().then(function(resp){
-    console.log(resp.data);
-    $scope.prevWeather = resp.data.JSonDataPrevResult;
-    $scope.AMIcon = "ion-pizza";
-    $scope.PMIcon = "ion-pizza";
-    if (resp.data.JSonDataPrevResult != undefined){
-      switch(resp.data.JSonDataPrevResult.PrevisionAM) {
-      case "N":
-          $scope.AMIcon = "ion-ios-partlysunny";
-          break;
-      case "B":
-          $scope.AMIcon = "ion-ios-sunny";
-          break;
-      case "Pe":
-          $scope.AMIcon = "ion-ios-cloudy";
-          break;
-      case "Pl":
-          $scope.AMIcon = "ion-ios-rainy";
-          break;
-      case "Ne":
-          $scope.AMIcon = "ion-ios-snowy";
-          break;
-      case "O":
-          $scope.AMIcon = "ion-ios-thunderstorm";
-          break;
-      case "X":
-          $scope.AMIcon = "ion-pizza";
-          break;
-      }
+    $scope.prevWeather = resp.data.JSONDataPrevResult;
+    console.log(resp.data.JSONDataPrevResult);
+    if (resp.data.JSONDataPrevResult != undefined){
+      $scope.AMIcon = setIconPrev($scope.prevWeather.PrevisionAM);
 
-      switch($scope.prevWeather.PrevisionPM) {
-      case "N":
-          $scope.PMIcon = "ion-ios-partlysunny";
-          break;
-      case "B":
-          $scope.PMIcon = "ion-ios-sunny";
-          break;
-      case "Pe":
-          $scope.PMIcon = "ion-ios-cloudy";
-          break;
-      case "Pl":
-          $scope.PMIcon = "ion-ios-rainy";
-          break;
-      case "Ne":
-          $scope.PMIcon = "ion-ios-snowy";
-          break;
-      case "O":
-          $scope.PMIcon = "ion-ios-thunderstorm";
-          break;
-      case "X":
-          $scope.PMIcon = "ion-pizza";
-          break;
-      }
+      $scope.PMIcon = setIconPrev($scope.prevWeather.PrevisionPM);
+    }
+    else{
+      console.error('FAIIIIIL');
     }
   }, function(error){
     console.error('error');
@@ -100,57 +86,13 @@ angular.module('starter.controllers', [])
   $scope.doRefresh = function() {
     Weather.getPrevWeather().then(function(resp){
       console.log(resp.data);
-      $scope.prevWeather = resp.data.JSonDataPrevResult;
+      $scope.prevWeather = resp.data.JSONDataPrevResult;
       $scope.AMIcon = "ion-pizza";
       $scope.PMIcon = "ion-pizza";
-      if (resp.data.JSonDataPrevResult != undefined){
-        switch(resp.data.JSonDataPrevResult.PrevisionAM) {
-        case "N":
-            $scope.AMIcon = "ion-ios-partlysunny";
-            break;
-        case "B":
-            $scope.AMIcon = "ion-ios-sunny";
-            break;
-        case "Pe":
-            $scope.AMIcon = "ion-ios-cloudy";
-            break;
-        case "Pl":
-            $scope.AMIcon = "ion-ios-rainy";
-            break;
-        case "Ne":
-            $scope.AMIcon = "ion-ios-snowy";
-            break;
-        case "O":
-            $scope.AMIcon = "ion-ios-thunderstorm";
-            break;
-        case "X":
-            $scope.AMIcon = "ion-pizza";
-            break;
-        }
+      if (resp.data.JSONDataPrevResult != undefined){
+        $scope.AMIcon = setIconPrev($scope.prevWeather.PrevisionAM);
 
-        switch($scope.prevWeather.PrevisionPM) {
-        case "N":
-            $scope.PMIcon = "ion-ios-partlysunny";
-            break;
-        case "B":
-            $scope.PMIcon = "ion-ios-sunny";
-            break;
-        case "Pe":
-            $scope.PMIcon = "ion-ios-cloudy";
-            break;
-        case "Pl":
-            $scope.PMIcon = "ion-ios-rainy";
-            break;
-        case "Ne":
-            $scope.PMIcon = "ion-ios-snowy";
-            break;
-        case "O":
-            $scope.PMIcon = "ion-ios-thunderstorm";
-            break;
-        case "X":
-            $scope.PMIcon = "ion-pizza";
-            break;
-        }
+        $scope.PMIcon = setIconPrev($scope.prevWeather.PrevisionPM);
       }
     }, function(error){
       console.error('error');
@@ -168,4 +110,30 @@ function adaptTemp(temp){
     tempFinal++;
   }
   return tempFinal;
+}
+
+function setIconPrev(value){
+  switch(value) {
+  case "N":
+      return "ion-ios-partlysunny";
+      break;
+  case "B":
+      return "ion-ios-sunny";
+      break;
+  case "Pe":
+      return "ion-ios-cloudy";
+      break;
+  case "Pl":
+      return "ion-ios-rainy";
+      break;
+  case "Ne":
+      return "ion-ios-snowy";
+      break;
+  case "O":
+      return "ion-ios-thunderstorm";
+      break;
+  case "X":
+      return "ion-pizza";
+      break;
+  }
 }

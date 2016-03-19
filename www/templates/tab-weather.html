@@ -4,32 +4,60 @@
     pulling-text="Tirer pour rafraichir..."
     on-refresh="doRefresh()">
   </ion-refresher>
-    <div class="row">
-      <div class="padding col temp">
-        <p>
-          {{currentWeather.Temperature}}°<br/>
-          {{currentWeather.TemperatureRessentie}}° ressentie
-        </p>
-      </div>
-      <div class="padding col other">
-          <i class="weatherIcon icon ion-ios-{{weatherIcon}}"></i>
+    <div class="list card">
+
+    <div class="item item-avatar">
+      <img src="/img/logo.jpg" alt="" height="150" />
+      <h2>Prévision météo</h2>
+      <p>Date du dernier relevé : {{currentWeather.DateReleve  | limitTo : 10}}</p>
+    </div>
+
+    <div class="item item-body">
+      <div class="row">
+        <div class="col">
+          <p>
+            {{currentWeather.Temperature}}°
+          </p>
+          <p>
+            {{currentWeather.TemperatureRessentie}}° ressentie
+          </p>
+        </div>
+        <div class="col">
+          <p>
+            {{currentWeather.VentVitesse}}km/h
+            <i class="icon ion-navigate"></i>{{currentWeather.VentDirection}}
+          </p>
+          <p on-tap="showAlert()">
+            <i class="waterIcon icon ion-waterdrop"></i>
+            {{currentWeather.PrecipitationJour}}mm d'eau
+          </p>
+        </div>
       </div>
     </div>
+  </div>
+  <div class="list card">
+
+  <div class="item item-avatar">
+    <img src="/img/logo.jpg" alt="" height="150" />
+    <h2>Prévision météo du lendemain</h2>
+    <p>Date du dernier relevé : {{currentWeather.DateReleve | limitTo : 10}}</p>
+  </div>
+
+  <div class="item item-body">
     <div class="row">
-      <div class="padding col wind">
+      <div class="col">
         <p>
-          {{currentWeather.VentVitesse}}km/h
+          Entre {{prevWeather.PrevTempMin}}° et {{prevWeather.PrevTempMax}}°
         </p>
         <p>
-          <i class="icon ion-navigate"></i>{{currentWeather.VentDirection}}
+          Matin :
+          <i class="weatherIcon icon {{AMIcon}}"></i>
+          Après midi :
+          <i class="weatherIcon icon {{PMIcon}}"></i>
         </p>
       </div>
-
-      <div class="padding col water" on-tap="showAlert()">
-          <i class="waterIcon icon ion-waterdrop"></i><br>
-          {{currentWeather.PrecipitationJour}}mm d'eau
-      </div>
-
     </div>
+  </div>
+</div>
   </ion-content>
 </ion-view>
